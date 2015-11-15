@@ -1,0 +1,106 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <div id="chartContainer" style="height: 300px; width: 100%;">
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script type="text/javascript" src="js/canvasjs.js"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $.getJSON("getData.php", function (result) {
+
+                    var chart = new CanvasJS.Chart("chartContainer",
+                            {
+                                zoomEnabled: false,
+                                animationEnabled: true,
+                                title:{
+                                    text: "Profile Growth"
+                                },
+                                axisY:{
+                                    title: "Followers",
+                                    interlacedColor: "#F8F1E4",
+                                    tickLength: 10,
+                                    maximum: 300,
+                                    interval:50,
+                                    interlacedColor: "#F5F5F5",
+                                    gridColor: "#D7D7D7",
+                                    tickColor: "#D7D7D7"
+                                },
+                                axisX:{
+                                    title: "Days",
+                                    gridThickness: 1,
+                                    tickLength: 10,
+                                    maximum: 10,
+                                    interval:1
+                                },
+                                theme: "theme1",
+                                toolTip:{
+                                    shared: true
+                                },
+                                legend:{
+                                    verticalAlign: "bottom",
+                                    horizontalAlign: "center",
+                                    fontSize: 15,
+                                    fontFamily: "Lucida Sans Unicode"
+                                },
+                                data: [
+                                    {
+                                        type: "line",
+                                        lineThickness:5,
+                                        showInLegend: true,
+                                        name: "streetcoder",
+                                        color: "#98c200",
+                                        markerSize: 12,
+                                        dataPoints: result
+                                    },
+                                ],
+                                legend: {
+                                    cursor:"pointer",
+                                    itemclick : function(e) {
+                                        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                            e.dataSeries.visible = false;
+                                        }
+                                        else {
+                                            e.dataSeries.visible = true;
+                                        }
+                                        chart.render();
+                                    }
+                                }
+                            });
+                    chart.render();
+
+                });
+
+            });
+
+        </script>
+    </body>
+</html>
